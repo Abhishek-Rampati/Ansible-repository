@@ -1,0 +1,35 @@
+---
+- name: Install package and create user
+  hosts: db1
+  become: true
+  vars:
+    pkg_name: mariadb
+    usr_name: test_user
+  tasks:
+    - name: install a mariadb package
+      yum: name={{ pkg_name }} state=present
+    - name: create a user
+      user: name={{ test_user }} state=present 
+---
+
+- name: Install package and create user
+  hosts: db1
+  user: ansuser
+  become: true
+  var_files:
+    - external_vars.yaml
+  
+    
+  tasks:
+    - name: install a mariadb package
+      yum: name={{ pkg_name1 }} state=present
+
+    - name: start the mariadb service 
+      service: name={{ pkg_name2 }} state=started
+
+    - name:  Install Postfix on the db server
+      yum:   name={{ pkg_name3 }} state=present 
+
+---
+    
+  
